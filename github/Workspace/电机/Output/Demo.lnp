@@ -1,0 +1,4 @@
+"..\Output\STARTUP.obj",
+"..\Output\main.obj" 
+TO "..\Output\Demo" 
+PRINT("..\Listing\Demo.m51")

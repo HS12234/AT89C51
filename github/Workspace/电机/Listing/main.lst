@@ -1,0 +1,174 @@
+C51 COMPILER V9.56.0.0   MAIN                                                              10/26/2017 10:29:06 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN ..\Output\main.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\User\main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\User) DEBUG OBJECTEXTE
+                    -ND PRINT(..\Listing\main.lst) TABS(6) OBJECT(..\Output\main.obj)
+
+line level    source
+
+   1          #include<reg51.h> 
+   2          #define u8 unsigned char
+   3          
+   4          void Init(void);
+   5          void key_control(void);
+   6          void delay_ms(int i);
+   7          void limit(void);
+   8          u8 time=0;
+   9          u8 SegCode[10] = {0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07, 0x7f, 0x6f};
+  10          u8 key[2]={0xfe,0xfd};
+  11          char show[2]={5,0}; 
+  12          
+  13          sbit KEY=P2^5;
+  14          sbit key1=P2^1;
+  15          sbit key2=P2^2;
+  16          sbit key3=P2^3;
+  17          sbit key4=P2^4;
+  18          sbit MA=P2^0;
+  19          sbit MB=P2^7;
+  20          
+  21          void Init(void)
+  22          {
+  23   1                  IT0=1;
+  24   1                  IE=0x9f;
+  25   1                  TMOD=0x20;
+  26   1                  TH0=0xFe;
+  27   1                  TL0=0xFe;
+  28   1                  TR0=1;
+  29   1      }
+  30          
+  31          void main()
+  32          {
+  33   1                  u8 i;
+  34   1                  u8 dutyCycle=0;
+  35   1                  Init();                  
+  36   1                  while(1)
+  37   1                  {
+  38   2      
+  39   2                              dutyCycle=show[0]*10+show[1];
+  40   2                              for(i=0;i<2;i++)
+  41   2                              {
+  42   3                                          P1=key[i];
+  43   3                                          P0=SegCode[show[i]];
+  44   3                                          delay_ms(1);
+  45   3                              }
+  46   2                              if(time==100)
+  47   2                              {
+  48   3                                          time=0;
+  49   3                              }
+  50   2                              if(dutyCycle>time)
+  51   2                              {
+  52   3                                          KEY=1;
+  53   3                              }
+  54   2                              else KEY=0;
+C51 COMPILER V9.56.0.0   MAIN                                                              10/26/2017 10:29:06 PAGE 2   
+
+  55   2                              }
+  56   1      }
+  57          
+  58          void INT0_Handler() interrupt 0
+  59          {
+  60   1                  key_control();
+  61   1      }
+  62          
+  63          void TIM0_Handler() interrupt 1
+  64          {
+  65   1                  time=time+1;
+  66   1      }
+  67          
+  68          void key_control(void)         
+  69          {
+  70   1                   if(key1==0)
+  71   1                  {
+  72   2                              delay_ms(1);
+  73   2                              if(key1==0)
+  74   2                              { 
+  75   3                                          while(key1==0);
+  76   3                                          MA=~MA;
+  77   3                                     
+  78   3                              }
+  79   2                  }
+  80   1                  if(key2==0)
+  81   1                  {
+  82   2                              delay_ms(1);
+  83   2                              if(key2==0)
+  84   2                              {
+  85   3                                          while (key2==0);
+  86   3                                          if(MA!=MB)
+  87   3                                          {
+  88   4                                                      MA=~MA;
+  89   4                                                      MB=~MB;
+  90   4                                          }
+  91   3                              }
+  92   2                  }
+  93   1                  if(key3==0)
+  94   1                  {
+  95   2                              delay_ms(1);
+  96   2                              if(key3==0)
+  97   2                              {
+  98   3                                          while(key3==0);
+  99   3                                          if(show[1]<7||show[0]<9)
+ 100   3                                          {
+ 101   4                                                      show[1]=show[1]+3;
+ 102   4                                          }
+ 103   3                                          limit();
+ 104   3                              }
+ 105   2                  }
+ 106   1                  
+ 107   1                  if(key4==0)
+ 108   1                  {
+ 109   2                              delay_ms(1);
+ 110   2                              if(key4==0)
+ 111   2                              {
+ 112   3                                    while(key4==0);
+ 113   3                                    if( show[1]>=5|| show[0]>0)
+ 114   3                                    {
+ 115   4                                                show[1]=show[1]-5;
+ 116   4                                    }
+C51 COMPILER V9.56.0.0   MAIN                                                              10/26/2017 10:29:06 PAGE 3   
+
+ 117   3                                    limit();
+ 118   3                              }
+ 119   2                  }
+ 120   1      }
+ 121          
+ 122          void limit()
+ 123          {           
+ 124   1                  if(show[1]>=10)
+ 125   1                  {
+ 126   2                              show[1]=show[1]-10;
+ 127   2                              show[0]=show[0]+1;
+ 128   2                  }
+ 129   1      
+ 130   1                  if(show[1]<0)
+ 131   1                  {
+ 132   2                              show[1]=show[1]+10;
+ 133   2                              show[0]=show[0]-1;
+ 134   2                  }
+ 135   1      }
+ 136          
+ 137          
+ 138          
+ 139          void delay_ms (int t)
+ 140          {
+ 141   1                  int i,j;
+ 142   1                  for(i=t;i>0;i--)
+ 143   1                  {
+ 144   2                              for(j=1000;j>0;j--);
+ 145   2                  }
+ 146   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    339    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     15       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

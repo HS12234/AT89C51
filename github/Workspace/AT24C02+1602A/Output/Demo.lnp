@@ -1,0 +1,7 @@
+"..\Output\STARTUP.obj",
+"..\Output\main.obj",
+"..\Output\bsp_I2C.obj",
+"..\Output\bsp_LED_1602A.obj",
+"..\Output\bsp_AT24C02.obj" 
+TO "..\Output\Demo" 
+PRINT("..\Listing\Demo.m51")

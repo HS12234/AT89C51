@@ -1,0 +1,84 @@
+C51 COMPILER V9.56.0.0   BSP_PRINTF                                                        12/17/2017 11:20:43 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE BSP_PRINTF
+OBJECT MODULE PLACED IN ..\Output\bsp_printf.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\User\bsp_printf.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\User) DEBUG OBJE
+                    -CTEXTEND PRINT(..\Listing\bsp_printf.lst) TABS(6) OBJECT(..\Output\bsp_printf.obj)
+
+line level    source
+
+   1          #include "bsp_printf.h"
+   2          
+   3          void _printf(char *str,int num) 
+   4          {           
+   5   1                  char *a;//用来保存终止时str的地址
+   6   1                  char NUM[10];//定义一个10位的字符串数组，用来保存num的值
+   7   1                  int i;
+   8   1            
+   9   1      /***********利用指针，只要字符串不为空，就 while 循环下去就利用指针指向数组的性质，***********/
+  10   1      /************（str+1）指向字符串数组的下一位，一位一位向下发送指针指向字符的ASCII码***********/
+  11   1                  Init();//初始化
+  12   1                  for(i=0;i<1000;i++);
+  13   1                  while(*str) 
+  14   1                  {
+  15   2                              if(*str=='%'&&*(str+1)=='d')//用来判定“%d”如果字符串中出现
+  16   2                              {
+  17   3                                          a=str+2;
+  18   3                                          sprintf(NUM,"%d",num);// 把num写入NUM中
+  19   3                                          _printf(NUM,0);//输出字符串NUM
+  20   3                                          str=a;//将a保存的地址赋给str，使得循环继续下去
+  21   3                              }
+  22   2                              else  
+  23   2                              {
+  24   3                                          SBUF=*str++;  //发送当前位的字符的ASCII码并让指针指向下一位
+  25   3                                          while(TI==0);//判断是否发送完成，发送完成后硬件置1
+  26   3                                          TI=0;//置0，等待下次发送
+  27   3                                          delay_ms(100);//延时一段时间
+  28   3                              }
+  29   2                  }
+  30   1      }
+  31          
+  32          void delay_ms (int t)
+  33          {
+  34   1                  int i,j;
+  35   1                  for(i=t;i>0;i--)
+  36   1                  {
+  37   2                              for(j=1000;j>0;j--);
+  38   2                  }
+  39   1      }
+  40          void Init(void)
+  41          {
+  42   1                  /*          串口初始化            */
+  43   1                  TMOD=0x20;        //使用定时工作方式2
+  44   1      /******************波特率为9600***********************/      
+  45   1                  TL1 = 0xFD;       //设定定时初值
+  46   1                  TH1 = 0xFD;       //设定定时器重装值
+  47   1                  PCON=0x00;        //波特率不倍速
+  48   1      
+  49   1                  SCON=0x50;        //设置串口通信方式1
+  50   1            
+  51   1                  EA=1;
+  52   1                  ES=1;
+  53   1                  TR1=1;            //打开定时器中断
+  54   1      }
+C51 COMPILER V9.56.0.0   BSP_PRINTF                                                        12/17/2017 11:20:43 PAGE 2   
+
+  55          
+  56          //void Usart() interrupt 4  //串口收发中断
+  57          //{
+  58          //}
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    200    ----
+   CONSTANT SIZE    =      3    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      18
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

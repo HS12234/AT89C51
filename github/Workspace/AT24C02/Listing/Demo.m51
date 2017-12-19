@@ -1,0 +1,229 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/29/2017  19:18:58  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL_V5\C51\BIN\BL51.EXE ..\Output\STARTUP.obj, ..\Output\main.obj, ..\Output\bsp_I2C.obj TO ..\Output\Demo PRINT (..
+>> \Listing\Demo.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  ..\Output\STARTUP.obj (?C_STARTUP)
+  ..\Output\main.obj (MAIN)
+  ..\Output\bsp_I2C.obj (BSP_I2C)
+
+
+LINK MAP OF MODULE:  ..\Output\Demo (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0001H     UNIT         ?DT?_I2C_SENDBYTE?BSP_I2C
+            IDATA   0009H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0051H     UNIT         ?PR?_I2C_SENDBYTE?BSP_I2C
+            CODE    0054H     0021H     UNIT         ?PR?I2C_RECIVERBYTE?BSP_I2C
+            CODE    0075H     000DH     UNIT         ?PR?I2C_START?BSP_I2C
+            CODE    0082H     000DH     UNIT         ?PR?I2C_STOP?BSP_I2C
+            CODE    008FH     000CH     UNIT         ?C_C51STARTUP
+            CODE    009BH     000CH     UNIT         ?PR?DELAY_10US?BSP_I2C
+            CODE    00A7H     0002H     UNIT         ?PR?MAIN?MAIN
+
+
+
+OVERLAY MAP OF MODULE:   ..\Output\Demo (?C_STARTUP)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  ..\Output\Demo (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:008FH         SEGMENT       ?C_C51STARTUP
+  I:0009H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/29/2017  19:18:58  PAGE 2
+
+
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0092H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:008FH         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:008FH         LINE#         133
+  C:0091H         LINE#         134
+  C:0092H         LINE#         135
+  C:0093H         LINE#         136
+  C:0095H         LINE#         185
+  C:0098H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  C:00A7H         PUBLIC        main
+  -------         PROC          MAIN
+  C:00A7H         LINE#         4
+  C:00A7H         LINE#         5
+  C:00A7H         LINE#         6
+  C:00A7H         LINE#         7
+  C:00A7H         LINE#         9
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        BSP_I2C
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  C:0054H         PUBLIC        I2C_ReciverByte
+  C:0075H         PUBLIC        I2C_Start
+  C:00A2H         PUBLIC        delay_10us
+  C:0003H         PUBLIC        _I2C_SendByte
+  C:0082H         PUBLIC        I2C_Stop
+  B:0090H.1       PUBLIC        SDA
+  B:0090H.0       PUBLIC        SCL
+  -------         PROC          L?0022
+  -------         ENDPROC       L?0022
+  -------         PROC          DELAY_10US
+  -------         DO            
+  D:0007H         SYMBOL        a
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/29/2017  19:18:58  PAGE 3
+
+
+  -------         ENDDO         
+  C:00A2H         LINE#         3
+  C:00A2H         LINE#         4
+  C:00A2H         LINE#         6
+  C:00A6H         LINE#         7
+  -------         ENDPROC       DELAY_10US
+  -------         PROC          I2C_START
+  C:0075H         LINE#         10
+  C:0075H         LINE#         11
+  C:0075H         LINE#         12
+  C:0075H         LINE#         13
+  C:0075H         LINE#         14
+  C:0075H         LINE#         15
+  C:0078H         LINE#         16
+  C:007AH         LINE#         17
+  C:007DH         LINE#         18
+  C:007FH         LINE#         19
+  -------         ENDPROC       I2C_START
+  -------         PROC          I2C_STOP
+  C:0082H         LINE#         23
+  C:0082H         LINE#         24
+  C:0082H         LINE#         25
+  C:0084H         LINE#         26
+  C:0087H         LINE#         27
+  C:0087H         LINE#         28
+  C:0087H         LINE#         29
+  C:0087H         LINE#         30
+  C:008AH         LINE#         31
+  C:008CH         LINE#         32
+  -------         ENDPROC       I2C_STOP
+  -------         PROC          _I2C_SENDBYTE
+  D:0005H         SYMBOL        dat
+  -------         DO            
+  D:0004H         SYMBOL        a
+  D:0008H         SYMBOL        b
+  -------         ENDDO         
+  C:0003H         LINE#         35
+  C:0005H         LINE#         36
+  C:0005H         LINE#         38
+  C:0007H         LINE#         39
+  C:0007H         LINE#         40
+  C:0021H         LINE#         41
+  C:0023H         LINE#         42
+  C:0026H         LINE#         43
+  C:0028H         LINE#         44
+  C:002BH         LINE#         45
+  C:002DH         LINE#         46
+  C:0030H         LINE#         47
+  C:0034H         LINE#         49
+  C:0036H         LINE#         50
+  C:0038H         LINE#         51
+  C:003BH         LINE#         52
+  C:003BH         LINE#         53
+  C:003DH         LINE#         54
+  C:0044H         LINE#         55
+  C:0044H         LINE#         56
+  C:0046H         LINE#         57
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/29/2017  19:18:58  PAGE 4
+
+
+  C:0049H         LINE#         58
+  C:004CH         LINE#         59
+  C:004CH         LINE#         60
+  C:004CH         LINE#         61
+  C:004EH         LINE#         62
+  C:0051H         LINE#         63
+  C:0053H         LINE#         64
+  -------         ENDPROC       _I2C_SENDBYTE
+  -------         PROC          I2C_RECIVERBYTE
+  -------         DO            
+  D:0006H         SYMBOL        a
+  D:0005H         SYMBOL        dat
+  -------         ENDDO         
+  C:0054H         LINE#         67
+  C:0054H         LINE#         68
+  C:0054H         LINE#         69
+  C:0057H         LINE#         70
+  C:0057H         LINE#         71
+  C:0057H         LINE#         72
+  C:0059H         LINE#         73
+  C:005CH         LINE#         74
+  C:0060H         LINE#         75
+  C:0066H         LINE#         76
+  C:0069H         LINE#         77
+  C:006BH         LINE#         78
+  C:006EH         LINE#         79
+  C:0072H         LINE#         80
+  C:0074H         LINE#         81
+  -------         ENDPROC       I2C_RECIVERBYTE
+  -------         ENDMOD        BSP_I2C
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_START?BSP_I2C
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_STOP?BSP_I2C
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_I2C_SENDBYTE?BSP_I2C
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_RECIVERBYTE?BSP_I2C
+
+Program Size: data=10.0 xdata=0 code=169
+LINK/LOCATE RUN COMPLETE.  4 WARNING(S),  0 ERROR(S)

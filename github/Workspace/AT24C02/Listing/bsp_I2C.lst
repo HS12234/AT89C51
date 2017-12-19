@@ -1,0 +1,107 @@
+C51 COMPILER V9.56.0.0   BSP_I2C                                                           11/29/2017 19:18:58 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE BSP_I2C
+OBJECT MODULE PLACED IN ..\Output\bsp_I2C.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\User\bsp_I2C.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\User) DEBUG OBJECTE
+                    -XTEND PRINT(..\Listing\bsp_I2C.lst) TABS(6) OBJECT(..\Output\bsp_I2C.obj)
+
+line level    source
+
+   1          #include "bsp_I2C.h"
+   2          
+   3          void delay_10us(void)    // 延时10us
+   4          {
+   5   1          unsigned char a;
+   6   1          for(a=3;a>0;a--);
+   7   1      }
+   8          
+   9          /************************** 起始信号 **************************/
+  10          void I2C_Start(void)
+  11          {
+  12   1                  SCL=1;
+  13   1                  delay_10us();
+  14   1                  SDA=1;
+  15   1                  delay_10us();
+  16   1                  SDA=0;
+  17   1                  delay_10us();
+  18   1                  SCL=0;
+  19   1                  delay_10us();
+  20   1      }   
+  21          
+  22          /************************** 结束信号 **************************/
+  23          void I2C_Stop(void)
+  24          {
+  25   1                  SDA=0;
+  26   1                  delay_10us();
+  27   1                  SCL=1;
+  28   1                  delay_10us();
+  29   1                  SDA=1;
+  30   1                  delay_10us();
+  31   1                  SDA=0;
+  32   1                  delay_10us();
+  33   1      }
+  34          /************************** 发送字节 **************************/
+  35          char I2C_SendByte (char dat)
+  36          {
+  37   1                  u8 a,b;
+  38   1                  for(a=0;a<8;a++)
+  39   1                  {
+  40   2                              if((dat<<a)&0x80) SDA=1; 
+  41   2                              else SDA=0;                   //从最高位开始传输
+  42   2                              delay_10us();
+  43   2                              SCL=1;
+  44   2                              delay_10us();           //等待接收
+  45   2                              SCL=0;    
+  46   2                              delay_10us();
+  47   2                  }
+  48   1                  /* 八位数据发送完成 */
+  49   1                  SDA=1;
+  50   1                  SCL=1;
+  51   1                  while(SDA)
+  52   1                  {
+  53   2                              b++;
+  54   2                              if(b>200)
+C51 COMPILER V9.56.0.0   BSP_I2C                                                           11/29/2017 19:18:58 PAGE 2   
+
+  55   2                              {
+  56   3                                          SCL=0;
+  57   3                                          delay_10us();
+  58   3                                          return 0;  //返回0表示通信失败
+  59   3                              }
+  60   2                  }
+  61   1                  SCL=0;
+  62   1                  delay_10us();
+  63   1                  return 1;//通信成功
+  64   1      }
+  65          
+  66          /************************** 接收字节 **************************/
+  67          char I2C_ReciverByte (void)
+  68          {
+  69   1                  u8 a=0,dat=0;
+  70   1                  for(a=0;a<8;a++)
+  71   1                  {
+  72   2                              SCL=1;
+  73   2                              delay_10us();
+  74   2                              dat=dat<<1;
+  75   2                              dat=SDA|dat;
+  76   2                              delay_10us();
+  77   2                              SCL=0;
+  78   2                              delay_10us();
+  79   2                  }
+  80   1                  return dat;
+  81   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    152    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

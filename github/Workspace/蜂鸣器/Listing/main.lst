@@ -1,0 +1,59 @@
+C51 COMPILER V9.56.0.0   MAIN                                                              10/22/2017 16:55:22 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN ..\Output\main.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\User\main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\User) DEBUG OBJECTEXTE
+                    -ND PRINT(..\Listing\main.lst) TABS(6) OBJECT(..\Output\main.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          void Init(void);
+   3          u8 time=0;
+   4          sbit key=P1^5;
+   5          int main()    
+   6          {
+   7   1                  Init();
+   8   1                  while(1)
+   9   1                  {
+  10   2      
+  11   2                  }
+  12   1      }
+  13          
+  14          void Init (void)
+  15          {
+  16   1                  IE=0xff;
+  17   1                  TMOD=0x20;
+  18   1                  TL0=0x38;
+  19   1                  TH0=0x38;
+  20   1                  TR0=1;
+  21   1      }
+  22          
+  23          void TIM0_Handler() interrupt 1
+  24          {
+  25   1                  time=time+1;
+  26   1                                    if(time>5)
+  27   1                              {
+  28   2                                    time=0;
+  29   2                              }
+  30   1                                          if(time<=3)
+  31   1                                          {
+  32   2                                                      key=1;
+  33   2                                          }
+  34   1                                          else key=0;
+  35   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     54    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
