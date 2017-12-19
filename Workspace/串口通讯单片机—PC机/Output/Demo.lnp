@@ -1,0 +1,5 @@
+"..\Output\STARTUP.obj",
+"..\Output\main.obj",
+"..\Output\bsp_Init.obj" 
+TO "..\Output\Demo" 
+PRINT("..\Listing\Demo.m51")

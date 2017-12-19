@@ -1,0 +1,35 @@
+C51 COMPILER V9.56.0.0   MAIN                                                              12/17/2017 11:20:43 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN ..\Output\main.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\User\main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\User) DEBUG OBJECTEXTE
+                    -ND PRINT(..\Listing\main.lst) TABS(6) OBJECT(..\Output\main.obj)
+
+line level    source
+
+   1          #include <reg51.h>      //51单片机头文件
+   2          #include <stdio.h>      //c库头文件
+   3          #include "bsp_printf.h" //printf头文件
+   4          
+   5          
+   6          int main()
+   7          {
+   8   1                  _printf("%d",10000);
+   9   1      //            _printf("hello!! world!!%d&&",10000);
+  10   1                  while(1);
+  11   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     15    ----
+   CONSTANT SIZE    =      3    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,88 @@
+C51 COMPILER V9.56.0.0   SEND                                                              11/10/2017 18:05:25 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE SEND
+OBJECT MODULE PLACED IN ..\Output\send.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\User\send.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\User) DEBUG OBJECTEXTE
+                    -ND PRINT(..\Listing\send.lst) TABS(6) OBJECT(..\Output\send.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          
+   3          u8  receiveData=0;
+   4          
+   5          sbit led=P1^4;
+   6          sbit key=P1^0;
+   7          sbit key1=P1^3;
+   8          void Init() 
+   9          {
+  10   1                  /*          串口初始化            */
+  11   1                  TMOD=0x20;  
+  12   1                  TL1 = 0xFD;       //设定定时初值
+  13   1                  TH1 = 0xFD;       //设定定时器重装值
+  14   1                  PCON=0x00;
+  15   1                  TR1=1;
+  16   1                  SCON=0x50;
+  17   1                  EA=1;
+  18   1                  ES=1;
+  19   1      
+  20   1      }
+  21          
+  22          void main()    
+  23          {
+  24   1      int i;
+  25   1            u8 keyvalue;
+  26   1                  Init();
+  27   1                  while(1)
+  28   1                  {
+  29   2                              if(key==1)
+  30   2                              {
+  31   3                                          if(key1==0)
+  32   3                                          {
+  33   4                                                      for(i=0;i<1000;i++);
+  34   4                                                      if(key1==0)
+  35   4                                                      {
+  36   5                                                                  keyvalue=P1;
+  37   5                                                                  while(key1==0);
+  38   5                                                                  SBUF = keyvalue;
+  39   5                                                                  if(!T1);
+  40   5                                                                  T1=0;
+  41   5                                                      }
+  42   4      
+  43   4                                          }
+  44   3                              }
+  45   2                  }
+  46   1      }
+  47          
+  48          void Usart() interrupt 4
+  49          {
+  50   1                  
+  51   1                  receiveData =SBUF;
+  52   1                  if(receiveData==0xf7)
+  53   1                  {
+  54   2                              if(key==0)
+C51 COMPILER V9.56.0.0   SEND                                                              11/10/2017 18:05:25 PAGE 2   
+
+  55   2                              {led=~led;}
+  56   2                  }
+  57   1                  RI=0; 
+  58   1                  
+  59   1      }
+  60          
+  61          
+  62          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     83    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,175 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/10/2017  18:05:25  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL_V5\C51\BIN\BL51.EXE ..\Output\STARTUP.obj, ..\Output\send.obj TO ..\Output\Demo PRINT (..\Listing\Demo.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  ..\Output\STARTUP.obj (?C_STARTUP)
+  ..\Output\send.obj (SEND)
+  D:\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  ..\Output\Demo (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0001H     UNIT         ?DT?SEND
+            IDATA   0009H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0018H     UNIT         ?PR?USART?SEND
+            CODE    001BH     0004H     UNIT         ?C_INITSEG
+                    001FH     0004H                  *** GAP ***
+            CODE    0023H     0003H     ABSOLUTE     
+            CODE    0026H     008CH     UNIT         ?C_C51STARTUP
+            CODE    00B2H     0025H     UNIT         ?PR?MAIN?SEND
+            CODE    00D7H     0016H     UNIT         ?PR?INIT?SEND
+
+
+
+OVERLAY MAP OF MODULE:   ..\Output\Demo (?C_STARTUP)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?SEND
+  +--> ?C_INITSEG
+
+?PR?MAIN?SEND
+  +--> ?PR?INIT?SEND
+
+
+
+SYMBOL TABLE OF MODULE:  ..\Output\Demo (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0026H         SEGMENT       ?C_C51STARTUP
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/10/2017  18:05:25  PAGE 2
+
+
+  I:0009H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0029H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0026H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:0026H         LINE#         133
+  C:0028H         LINE#         134
+  C:0029H         LINE#         135
+  C:002AH         LINE#         136
+  C:002CH         LINE#         185
+  C:002FH         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        SEND
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  B:00B0H.5       PUBLIC        T1
+  B:00A8H.7       PUBLIC        EA
+  C:0003H         PUBLIC        Usart
+  C:00D7H         PUBLIC        Init
+  B:00A8H.4       PUBLIC        ES
+  B:0098H.0       PUBLIC        RI
+  C:00B2H         PUBLIC        main
+  D:0099H         PUBLIC        SBUF
+  D:0087H         PUBLIC        PCON
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  B:0090H.4       PUBLIC        led
+  B:0090H.0       PUBLIC        key
+  D:008DH         PUBLIC        TH1
+  D:008BH         PUBLIC        TL1
+  B:0088H.6       PUBLIC        TR1
+  D:0008H         PUBLIC        receiveData
+  B:0090H.3       PUBLIC        key1
+  -------         PROC          INIT
+  C:00D7H         LINE#         8
+  C:00D7H         LINE#         9
+  C:00D7H         LINE#         11
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/10/2017  18:05:25  PAGE 3
+
+
+  C:00DAH         LINE#         12
+  C:00DDH         LINE#         13
+  C:00E0H         LINE#         14
+  C:00E3H         LINE#         15
+  C:00E5H         LINE#         16
+  C:00E8H         LINE#         17
+  C:00EAH         LINE#         18
+  C:00ECH         LINE#         20
+  -------         ENDPROC       INIT
+  -------         PROC          MAIN
+  -------         DO            
+  D:0006H         SYMBOL        i
+  D:0007H         SYMBOL        keyvalue
+  -------         ENDDO         
+  C:00B2H         LINE#         22
+  C:00B2H         LINE#         23
+  C:00B2H         LINE#         26
+  C:00B5H         LINE#         27
+  C:00B5H         LINE#         28
+  C:00B5H         LINE#         29
+  C:00B8H         LINE#         30
+  C:00B8H         LINE#         31
+  C:00BBH         LINE#         32
+  C:00BBH         LINE#         33
+  C:00C9H         LINE#         34
+  C:00CCH         LINE#         35
+  C:00CCH         LINE#         36
+  C:00CEH         LINE#         37
+  C:00D1H         LINE#         38
+  C:00D3H         LINE#         39
+  C:00D3H         LINE#         40
+  C:00D5H         LINE#         41
+  C:00D5H         LINE#         43
+  C:00D5H         LINE#         44
+  C:00D5H         LINE#         45
+  -------         ENDPROC       MAIN
+  -------         PROC          USART
+  C:0003H         LINE#         48
+  C:0007H         LINE#         51
+  C:000AH         LINE#         52
+  C:000FH         LINE#         53
+  C:000FH         LINE#         54
+  C:0012H         LINE#         55
+  C:0014H         LINE#         56
+  C:0014H         LINE#         57
+  C:0016H         LINE#         59
+  -------         ENDPROC       USART
+  -------         ENDMOD        SEND
+
+Program Size: data=10.0 xdata=0 code=233
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,48 @@
+C51 COMPILER V9.56.0.0   MAIN                                                              11/11/2017 15:09:17 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN ..\Output\main.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\User\main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\User) DEBUG OBJECTEXTE
+                    -ND PRINT(..\Listing\main.lst) TABS(6) OBJECT(..\Output\main.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #include "bsp_Init.h"
+   3          
+   4          /***********************************************************************/
+   5          
+   6          u8 receiveData;
+   7          
+   8          int main()   
+   9          {
+  10   1                  Init();  //初始化
+  11   1                  while(1)
+  12   1                  {
+  13   2                              P1 = receiveData;//将receiveData的值赋给P1；
+  14   2                  }
+  15   1      
+  16   1      }
+  17          
+  18          void Usart() interrupt 4  //串口收发中断
+  19          {
+  20   1                  /*          接收中断        */
+  21   1                  TI=1;
+  22   1                  RI=0;           //置0，便于下一次的接收
+  23   1                  receiveData = SBUF;//将接收到的数据保存在 receiveData 中
+  24   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     16    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

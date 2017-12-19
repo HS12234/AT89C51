@@ -1,0 +1,112 @@
+C51 COMPILER V9.56.0.0   BSP_LED_1602A                                                     12/02/2017 13:14:22 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE BSP_LED_1602A
+OBJECT MODULE PLACED IN ..\Output\bsp_LED_1602A.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE ..\User\bsp_LED_1602A.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\User) DEBUG O
+                    -BJECTEXTEND PRINT(..\Listing\bsp_LED_1602A.lst) TABS(6) OBJECT(..\Output\bsp_LED_1602A.obj)
+
+line level    source
+
+   1          #include "bsp_LED_1602A.h"
+   2          
+   3          /******************四位总线 1206A***********/
+   4          
+   5          extern void I2C_Start( void );
+   6          extern void I2C_Stop( void );
+   7          extern char I2C_SendByte (char dat);
+   8          
+   9                
+  10          /************************** 输入字符 **************************/
+  11          void led_Show(int y,int x,char *show)//先输入行再输入列
+  12          {
+  13   1                  char addr;
+  14   1                  addr=0x80+0x40*y+x;
+  15   1                  send_command(addr);
+  16   1                  while(*show)
+  17   1                  {
+  18   2                              Send_tybe(*show++);
+  19   2                  }
+  20   1      }
+  21          
+  22          /************************** LED初始化 **************************/
+  23          void init_lcd(void)
+  24          {
+  25   1                  send_command(0x32);
+  26   1                  send_command(0x28);
+  27   1                  send_command(0x0C);
+  28   1                  send_command(0x06);
+  29   1                  send_command(0x01);
+  30   1      }
+  31          
+  32          /************************** 发送命令 **************************/
+  33          void send_command(char tybe)
+  34          {
+  35   1                  char tmp;
+  36   1                  I2C_Start();
+  37   1                  I2C_SendByte(0x7e);
+  38   1      /************************** 发送前四位 **************************/
+  39   1                  tmp = tybe & 0xF0;
+  40   1                  tmp |= 0x0C;      //RS = 0, RW = 0, EN = 1
+  41   1                  I2C_SendByte(tmp);
+  42   1                  Delay_1ms(1);
+  43   1                  tmp &= 0xFB;      //Make EN = 0
+  44   1                  I2C_SendByte(tmp); 
+  45   1      /************************** 发送后四位 **************************/
+  46   1                  tmp = (tybe & 0x0F) << 4       ;
+  47   1                  tmp |= 0x0C;       //RS = 0, RW = 0, EN = 1
+  48   1                  I2C_SendByte(tmp); 
+  49   1                  Delay_1ms(1);
+  50   1                  tmp &= 0xFB;      // Make EN = 0
+  51   1                  I2C_SendByte(tmp); 
+  52   1                  I2C_Stop();
+  53   1      }
+  54          
+C51 COMPILER V9.56.0.0   BSP_LED_1602A                                                     12/02/2017 13:14:22 PAGE 2   
+
+  55          /************************** 发送数据 **************************/
+  56          void Send_tybe(char tybe)
+  57          {
+  58   1                  char tmp;
+  59   1                  I2C_Start();
+  60   1                  I2C_SendByte(0x7e);
+  61   1      /************************** 发送前四位 **************************/
+  62   1                  tmp = tybe & 0xF0;
+  63   1                  tmp |= 0x0D;      //RS =1, RW = 0, EN = 1
+  64   1                  I2C_SendByte(tmp);
+  65   1                  Delay_1ms(1);
+  66   1                  tmp &= 0xFB;      //Make EN = 0
+  67   1                  I2C_SendByte(tmp); 
+  68   1      /************************** 发送后四位 **************************/
+  69   1                  tmp = (tybe & 0x0F) << 4       ;
+  70   1                  tmp |= 0x0D;       //RS =1, RW = 0, EN = 1
+  71   1                  I2C_SendByte(tmp); 
+  72   1                  Delay_1ms(1);
+  73   1                  tmp &= 0xFB;      // Make EN = 0
+  74   1                  I2C_SendByte(tmp); 
+  75   1                  I2C_Stop();
+  76   1      }
+  77          
+  78          void Delay_1ms(char t)   //误差 -0.651041666667us
+  79          {
+  80   1                  unsigned char a,b,i;
+  81   1                  for(i=0;t>i;i++)
+  82   1                  {
+  83   2                  for(b=102;b>0;b--)
+  84   2                  for(a=3;a>0;a--);
+  85   2                  }
+  86   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    246    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       7
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
